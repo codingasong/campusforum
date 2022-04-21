@@ -20,6 +20,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item @click="$router.push('/a/Person')">个人信息</el-dropdown-item>
+            <el-dropdown-item @click="$router.push('/')">首页</el-dropdown-item>
             <el-dropdown-item @click="$router.push('/login')">退出系统</el-dropdown-item>
           </el-dropdown-menu>
         </template>

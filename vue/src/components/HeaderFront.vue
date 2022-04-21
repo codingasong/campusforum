@@ -8,25 +8,27 @@
       class="el-menu-demo"
       router
       mode="horizontal"
-      background-color="#667c99"
-      text-color="#bdc6d2"
+      background-color="#409EFF"
+      text-color="#fff"
       active-text-color="#ffd04b"
   >
-    <el-menu-item index="/a/Person">
-      <el-avatar :size="50" :src="user.avatar" alt="user.name" style="position: relative; "></el-avatar>
+    <el-menu-item>
+      <span style="font-size: 20px; color:white">沈阳城市建设学院校园论坛</span>
+    </el-menu-item>
+    <el-menu-item index="/a/goods">
+      <el-space wrap><el-avatar :size="40" :src="user.avatar" alt="user.name" style="position: relative; "></el-avatar></el-space>
       {{ user.userName }}
     </el-menu-item>
-
-    <el-menu-item index="/a/goods">
-      <i class="el-icon-s-goods"></i>
+    <el-menu-item index="/index">
+      <i class="el-icon-s-goods" style="color:#fff;"></i>
       <template #title>二手信息</template>
     </el-menu-item>
-    <el-menu-item index="/a/posts">
-      <i class="el-icon-s-comment"></i>
+    <el-menu-item index="/postFront">
+      <i class="el-icon-s-comment" style="color:#fff;"></i>
       <template #title>树洞信息</template>
     </el-menu-item>
-    <el-menu-item index="/a/job">
-      <i class="el-icon-s-cooperation"></i>
+    <el-menu-item index="/jobFront">
+      <i class="el-icon-s-cooperation" style="color:#fff;"></i>
       <template #title>兼职信息</template>
     </el-menu-item>
 

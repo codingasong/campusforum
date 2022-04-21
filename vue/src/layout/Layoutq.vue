@@ -12,12 +12,13 @@
       <!--      主体-->
       <el-main>
         <el-row>
-          <el-col :span="7" style="border: 1px solid red">
+<!--          style="border: 1px solid red"-->
+          <el-col :span="7" >
           </el-col>
-          <el-col :span="10" style="border: 1px solid red">
+          <el-col :span="10" >
             <router-view style="flex: 1" />
           </el-col>
-          <el-col :span="7" style="border: 1px solid red">
+          <el-col :span="7" >
           </el-col>
         </el-row>
 

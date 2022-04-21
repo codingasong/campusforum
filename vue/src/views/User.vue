@@ -71,7 +71,7 @@
 
     <!--    新增用户的弹窗-->
     <el-dialog
-        title="提示"
+        title="操作"
         v-model="dialogVisible"
         width="30%"
     >
@@ -91,7 +91,6 @@
           <el-input v-model="form.age" style="width: 70%"></el-input>
         </el-form-item>
         <el-form-item label="专业">
-<!--          <el-input v-model="form.major" style="width: 70%"></el-input>-->
                     <el-select v-model="value" placeholder="请选择你的专业" @focus="getmajor">
                       <el-option
                           v-for="item in options"

@@ -106,6 +106,11 @@ public class UserController {
         if(selectuser != null){
             return Result.error("-1","用户名已存在");
         }
+        user.setGender("男");
+        user.setAge(18);
+        user.setRole(2);
+        user.setMajor("计算机科学与技术");
+        user.setAvatar("http://localhost:8888/files/56d1e9f1d4194a2792d27a385c52297e");
         userService.save(user);
         return Result.success();
     }

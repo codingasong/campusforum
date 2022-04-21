@@ -28,8 +28,6 @@
     <el-table :data="tableData" border stripe style="width: 100%">
       <el-table-column prop="majorId" label="ID"></el-table-column>
       <el-table-column prop="majorName" label="专业"></el-table-column>
-
-
       <el-table-column label="操作" width="200%">
         <template #default="scope">
           <el-button size="mini" @click="handleEdit(scope.row)"

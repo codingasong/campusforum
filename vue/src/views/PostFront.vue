@@ -1,24 +1,14 @@
 <template>
 
   <div >
-    <el-button @click="add" type="primary" size="large" >发布商品</el-button>
+    <el-button @click="add" type="primary" size="large" >发布</el-button>
     <el-row>
       <el-col>
         <div v-infinite-scroll="load"  class="infinite-list" style="overflow:auto; scrollbar-width:none;">
           <el-card v-for="i in list" :key="i"  infinite-scroll-disabled="disabled" style="margin: 10px 10px">
             <el-row>
-              <el-col :span="8">
-                <el-card>
-                  <template #default="scope">
-                    <el-image
-                        :src="i.goodsImg"
-                        :preview-src-list="[i.goodsImg]"
-                    >
-                    </el-image>
-                  </template>
-                </el-card>
-              </el-col>
-              <el-col :span="16">
+              <el-col >
+
                 <div id="details">
                   <el-descriptions
                       class="margin-top"
@@ -29,42 +19,27 @@
                     <el-descriptions-item>
                       <template #label>
                         <div class="cell-item">
-                          名称
+                          标题
                         </div>
                       </template>
-                      {{i.goodsName}}
+                      {{i.postsTitle}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                       <template #label>
                         <div class="cell-item">
-                          价格
+                          详细信息
                         </div>
                       </template>
-                      <el-tag size="small">{{i.goodsPrice}}</el-tag>
+                      <span v-html="i.postsDetail"></span>
                     </el-descriptions-item>
-                    <el-descriptions-item>
-                      <template #label>
-                        <div class="cell-item">
-                          简介
-                        </div>
-                      </template>
-                      {{i.goodsDetail}}
-                    </el-descriptions-item>
-                    <el-descriptions-item>
-                      <template #label>
-                        <div class="cell-item">
-                          分类
-                        </div>
-                      </template>
-                      {{i.goodsType}}
-                    </el-descriptions-item>
+
                     <el-descriptions-item>
                       <template #label>
                         <div class="cell-item">
                           发布时间
                         </div>
                       </template>
-                      {{i.goodsPubdate}}
+                      {{i.postsPubdate}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                       <template #label>
@@ -80,8 +55,8 @@
                           详情
                         </div>
                       </template>
-<!--                      <el-button type="primary" size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-button>-->
-<!--                      <el-tag size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-tag>-->
+                      <!--                      <el-button type="primary" size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-button>-->
+                      <!--                      <el-tag size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-tag>-->
                       <el-button type="text" size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-button>
                     </el-descriptions-item>
 
@@ -98,52 +73,28 @@
 
 
 
-
-
     <!--    新增的弹窗-->
-    <el-dialog title="提示" v-model="dialogVisible" width="30%">
+    <el-dialog title="发帖" v-model="dialogVisible" width="70%">
       <el-form ref="form" :model="form" label-width="120px">
-        <el-form-item label="商品名">
-          <el-input v-model="form.goodsName" style="width: 70%"></el-input>
+        <el-form-item label="标题">
+          <el-input v-model="form.postsTitle" style="width: 40%"></el-input>
         </el-form-item>
-        <el-form-item label="商品详情">
-          <el-input v-model="form.goodsDetail" style="width: 70%"></el-input>
-        </el-form-item>
-        <el-form-item label="商品类型">
-          <el-select v-model="value" placeholder="请选择商品类型">
-            <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-
-
-        <el-form-item label="商品价格">
-          <el-input v-model="form.goodsPrice" style="width: 70%"></el-input>
-        </el-form-item>
-        <el-form-item label="商品图片">
-          <el-upload action="http://localhost:8888/files/upload" :on-success="fileUploadSuccess"  list-type="picture" ref="uploadImg">
-            <el-button type="primary">点击上传</el-button>
-          </el-upload>
+        <el-form-item label="内容">
+          <div id="div1"></div>
         </el-form-item>
       </el-form>
       <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="save">确 定</el-button>
-        </span>
+    <span class="dialog-footer">
+      <el-button @click="dialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="save">确 定</el-button>
+    </span>
       </template>
     </el-dialog>
-
 
   </div>
 
 
-    <el-backtop :right="100" :bottom="100" />
+  <el-backtop :right="100" :bottom="100" />
 
 
 </template>
@@ -152,12 +103,13 @@
 
 import request from "@/utils/request";
 import {nextTick, ref} from "vue";
+import E from "wangeditor";
 let userStr = sessionStorage.getItem("user") || "{}"
 let user = JSON.parse(userStr)
 let userName = user.userName
-
+let editor;
 export default {
-  name: 'Index',
+  name: 'PostFront',
   data() {
     return {
       count: 1,//起始页数值为0
@@ -198,16 +150,13 @@ export default {
         search: this.search,
       };
       request.get(
-              "/goods",
+          "/posts",
           {params}
-          )
+      )
           .then(res => {
             console.log(res);
             this.list = this.list.concat(res.data.records); //
             this.totalPages = res.data.pages;
-            // this.loading = false;
-            // console.log(this.count);
-            // console.log(this.totalPages / 5);
           })
           .catch(err => {
             console.log(err);
@@ -217,24 +166,32 @@ export default {
     add() {
       this.dialogVisible = true;
       this.form = {};
-      // 清空图片上传列表
-      nextTick(()=> {
-        this.$refs.uploadImg.clearFiles()
+      // 当编辑器存在时，清空编辑器
+      if(editor){
+        editor.txt.clear()
+      }
+      // 如果编辑器不存在，则创建编辑器
+      this.$nextTick(() => {
+        if(!editor){
+          editor = new E('#div1')
+          // 配置 server 接口地址
+          editor.config.uploadImgServer = 'http://localhost:8888/files/editor/upload'
+          editor.config.uploadFileName = "file" //设置上传图片名称
+          editor.create()
+        }
       })
-
     },
     //保存到数据库
     save() {
-
-      // console.log(user.userName+ "----------------------------------");
+      this.form.postsDetail = editor.txt.html(); //获取编辑器里的内容，赋值到实体中
+      let userStr = sessionStorage.getItem("user") || "{}"
+      let user = JSON.parse(userStr)
       if(this.form.author == null){
         this.form.author = user.userName //赋值用户名
-        // console.log(this.form.author +"--------------------------------------------------");
       }
-      this.form.goodsType = this.value
-      request.post("/goods", this.form).then(res => {
+      request.post("/posts", this.form).then(res => {
         console.log(res);
-        if (this.form.goodsId) {
+        if (this.form.postsId) {
           if (res.code === '0') {
             this.$message({
               type: "success",
@@ -263,15 +220,9 @@ export default {
         this.dialogVisible = false;
       })
     },
-    // 上传图片
-    fileUploadSuccess(res) {
-      this.form.goodsImg = res.data
-    },
+
   },
   setup() {
-    // const url = ref(
-    //     'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-    // )
     return {
       search: ref(''),
       // url,

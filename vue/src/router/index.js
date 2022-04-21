@@ -63,6 +63,21 @@ const routes = [
         path: 'index',
         name: 'Index',
         component: () =>import("@/views/Index"),
+      },
+      {
+        path: 'postFront',
+        name: 'PostFront',
+        component: () =>import("@/views/PostFront"),
+      },
+      {
+        path: 'jobFront',
+        name: 'JobFront',
+        component: () =>import("@/views/JobFront"),
+      },
+      {
+        path: 'detail',
+        name: 'Deatil',
+        component: () =>import("@/views/Detail"),
       }
     ],
   }

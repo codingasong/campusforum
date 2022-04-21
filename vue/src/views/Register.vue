@@ -1,48 +1,51 @@
 <template>
-  <div style=" background-color: black;width: 100%; height: 100vh;">
+  <div class="loginbody">
     <div style="width: 330px; margin: 0 auto; padding-top: 120px; text-align: center ">
       <h1 style="font-size: xx-large; color: #fff;margin-bottom: 40px;">欢迎注册</h1>
-      <el-form
-          :model="ruleForm"
-          status-icon
-          :rules="rules"
-          ref="ruleForm"
-          size="normal"
-      >
-        <el-form-item prop="userName">
-          <el-input
-              v-model="ruleForm.userName"
-              autocomplete="off"
-              prefix-icon="el-icon-user"
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-              type="password"
-              v-model="ruleForm.password"
-              autocomplete="off"
-              prefix-icon="el-icon-lock"
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="checkPass">
-          <el-input
-              type="password"
-              v-model="ruleForm.checkPass"
-              autocomplete="off"
-              prefix-icon="el-icon-lock"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="register" style="width:100%">注册</el-button>
-<!--          <el-button @click="resetForm('ruleForm')" style="width:50%">重置</el-button>-->
-        </el-form-item>
-      </el-form>
+      <el-card>
+        <el-form
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            ref="ruleForm"
+            size="normal"
+        >
+          <el-form-item prop="userName">
+            <el-input
+                v-model="ruleForm.userName"
+                autocomplete="off"
+                prefix-icon="el-icon-user"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input
+                type="password"
+                v-model="ruleForm.password"
+                autocomplete="off"
+                prefix-icon="el-icon-lock"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="checkPass">
+            <el-input
+                type="password"
+                v-model="ruleForm.checkPass"
+                autocomplete="off"
+                prefix-icon="el-icon-lock"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="register" style="width:100%">注册</el-button>
+          </el-form-item>
+        </el-form>
+        <el-button @click="pushLogin">已有账号？立即登录</el-button>
+      </el-card>
     </div>
   </div>
 </template>
 
 <script>
 import request from "@/utils/request";
+import router from "@/router";
 
 export default {
   name: "Register",
@@ -115,14 +118,29 @@ export default {
         }
       })
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
-    },
+    // resetForm(formName) {
+    //   this.$refs[formName].resetFields()
+    // },
+  pushLogin(){
+    router.push("/login")
+  }
   },
 
 }
 </script>
 
 <style scoped>
-
+.loginbody {
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+  background-image: url("../assets/login11.jpg");
+  background-size: 100% 100%;
+  background-position: center center;
+  overflow: auto;
+  background-repeat: no-repeat;
+  position: fixed;
+  line-height: 100%;
+  padding-top: 150px;
+}
 </style>
