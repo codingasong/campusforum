@@ -78,6 +78,16 @@ const routes = [
         path: 'detail',
         name: 'Deatil',
         component: () =>import("@/views/Detail"),
+      },
+      {
+        path: 'postDetail',
+        name: 'PostDetail',
+        component: () =>import("@/views/PostDetail"),
+      },
+      {
+        path: 'jobDetail',
+        name: 'JobDetil',
+        component: () =>import("@/views/JobDetail"),
       }
     ],
   }

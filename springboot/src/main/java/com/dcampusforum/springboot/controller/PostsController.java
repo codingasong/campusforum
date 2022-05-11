@@ -13,6 +13,8 @@ import com.dcampusforum.springboot.entity.User;
 import com.dcampusforum.springboot.service.PostsService;
 import com.dcampusforum.springboot.service.UserService;
 import com.dcampusforum.springboot.utils.TokenUtils;
+import com.dcampusforum.springboot.vo.GoodsVO;
+import com.dcampusforum.springboot.vo.PostsVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -82,7 +84,16 @@ public class PostsController {
         return Result.success(page);
     }
 
-
+    /**
+     *
+     * @param postsId
+     * @return
+     */
+    @GetMapping("/getVO/{postsId}")
+    public Result<?> getGoodsVO(@PathVariable int postsId){
+        PostsVO postsVO = postsService.getPostsVO(postsId);
+        return Result.success(postsVO);
+    }
 
 
 

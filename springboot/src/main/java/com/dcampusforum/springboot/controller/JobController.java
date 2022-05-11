@@ -11,6 +11,8 @@ import com.dcampusforum.springboot.entity.Job;
 import com.dcampusforum.springboot.entity.Major;
 import com.dcampusforum.springboot.service.JobService;
 import com.dcampusforum.springboot.service.MajorService;
+import com.dcampusforum.springboot.vo.JobVO;
+import com.dcampusforum.springboot.vo.PostsVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -56,6 +58,8 @@ public class JobController {
             jobLambdaQueryWrapper.like(Job::getJobName,search);
         }
         jobLambdaQueryWrapper.like(Job::getAuthor,author);
+        jobLambdaQueryWrapper.orderByDesc(Job::getJobPubdate);
+
         IPage<Job> page = jobService.page(new Page<>(pageNum,pageSize),jobLambdaQueryWrapper);
         return Result.success(page);
     }
@@ -64,5 +68,16 @@ public class JobController {
     public Result<?> delMajorById(@PathVariable Long jobId){
         jobService.removeById(jobId);
         return Result.success();
+    }
+
+    /**
+     *
+     * @param jobId
+     * @return
+     */
+    @GetMapping("/getVO/{jobId}")
+    public Result<?> getGoodsVO(@PathVariable int jobId){
+        JobVO jobVO = jobService.getVO(jobId);
+        return Result.success(jobVO);
     }
 }

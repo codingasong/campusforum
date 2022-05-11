@@ -1,24 +1,14 @@
 <template>
 
-  <div class="bkimg">
-    <el-button @click="add" type="primary" size="large" >发布商品</el-button>
+  <div >
+    <el-button @click="add" type="primary" size="large" >发布一条</el-button>
     <el-row>
       <el-col>
         <div v-infinite-scroll="load"  class="infinite-list" style="overflow:auto; scrollbar-width:none;">
           <el-card v-for="i in list" :key="i"  infinite-scroll-disabled="disabled" style="margin: 10px 10px">
             <el-row>
-              <el-col :span="8">
-                <el-card>
-                  <template #default="scope">
-                    <el-image
-                        :src="i.goodsImg"
-                        :preview-src-list="[i.goodsImg]"
-                    >
-                    </el-image>
-                  </template>
-                </el-card>
-              </el-col>
-              <el-col :span="16">
+
+              <el-col :span="24">
                 <div id="details">
                   <el-descriptions
                       class="margin-top"
@@ -32,7 +22,15 @@
                           名称
                         </div>
                       </template>
-                      {{i.goodsName}}
+                      {{i.jobName}}
+                    </el-descriptions-item>
+                    <el-descriptions-item>
+                      <template #label>
+                        <div class="cell-item">
+                          介绍
+                        </div>
+                      </template>
+                      {{i.jobDetail}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                       <template #label>
@@ -40,15 +38,7 @@
                           价格
                         </div>
                       </template>
-                      <el-tag size="small">{{i.goodsPrice}}</el-tag>
-                    </el-descriptions-item>
-                    <el-descriptions-item>
-                      <template #label>
-                        <div class="cell-item">
-                          简介
-                        </div>
-                      </template>
-                      {{i.goodsDetail}}
+                      <el-tag size="small">{{i.jobPrice}}</el-tag>
                     </el-descriptions-item>
                     <el-descriptions-item>
                       <template #label>
@@ -56,7 +46,7 @@
                           分类
                         </div>
                       </template>
-                      {{i.goodsType}}
+                      {{i.jobType}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                       <template #label>
@@ -64,7 +54,7 @@
                           发布时间
                         </div>
                       </template>
-                      {{i.goodsPubdate}}
+                      {{i.jobPubdate}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                       <template #label>
@@ -80,10 +70,9 @@
                           详情
                         </div>
                       </template>
-<!--                      <el-button type="primary" size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-button>-->
-<!--                      <el-tag size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-tag>-->
-                      <el-button type="text" size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-button>
-<!--                      <el-button type="text" size="small" @click="toDetail(i.goodsId)">查看详情</el-button>-->
+                      <!--                      <el-button type="primary" size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-button>-->
+                      <!--                      <el-tag size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-tag>-->
+                      <el-button type="text" size="small" @click="$router.push({path:'/jobDetail',query:{jobId:i.jobId}})">查看详情</el-button>
                     </el-descriptions-item>
 
                   </el-descriptions>
@@ -101,17 +90,18 @@
 
 
 
-    <!--    新增的弹窗-->
+    <!--    新增用户的弹窗-->
     <el-dialog title="提示" v-model="dialogVisible" width="30%">
       <el-form ref="form" :model="form" label-width="120px">
-        <el-form-item label="商品名">
-          <el-input v-model="form.goodsName" style="width: 70%"></el-input>
+        <el-form-item label="兼职名">
+          <el-input v-model="form.jobName" style="width: 70%"></el-input>
         </el-form-item>
-        <el-form-item label="商品详情">
-          <el-input v-model="form.goodsDetail" style="width: 70%"></el-input>
+        <el-form-item label="兼职详情">
+          <el-input v-model="form.jobDetail" style="width: 70%"></el-input>
         </el-form-item>
-        <el-form-item label="商品类型">
-          <el-select v-model="value" placeholder="请选择商品类型">
+
+        <el-form-item label="兼职类型">
+          <el-select v-model="value" placeholder="请选择兼职类型">
             <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -122,14 +112,8 @@
           </el-select>
         </el-form-item>
 
-
-        <el-form-item label="商品价格">
-          <el-input v-model="form.goodsPrice" style="width: 70%"></el-input>
-        </el-form-item>
-        <el-form-item label="商品图片">
-          <el-upload action="http://localhost:8888/files/upload" :on-success="fileUploadSuccess"  list-type="picture" ref="uploadImg">
-            <el-button type="primary">点击上传</el-button>
-          </el-upload>
+        <el-form-item label="兼职价格">
+          <el-input v-model="form.jobPrice" style="width: 70%"></el-input>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -140,11 +124,12 @@
       </template>
     </el-dialog>
 
-    <el-backtop :right="100" :bottom="100" />
+
+
   </div>
 
 
-
+  <el-backtop :right="100" :bottom="100" />
 
 
 </template>
@@ -153,13 +138,12 @@
 
 import request from "@/utils/request";
 import {nextTick, ref} from "vue";
-import {createRouter as $router} from "vue-router";
 let userStr = sessionStorage.getItem("user") || "{}"
 let user = JSON.parse(userStr)
 let userName = user.userName
-let src;
+
 export default {
-  name: 'Index',
+  name: 'JobFront',
   data() {
     return {
       count: 1,//起始页数值为0
@@ -188,7 +172,6 @@ export default {
     load() {
       //滑到底部时进行加载
       // this.loading = true;
-      console.log(user.userName);
       setTimeout(() => {
         this.count += 1; //页数+1
         this.getMessage(); //调用接口，此时页数+1，查询下一页数据
@@ -201,16 +184,13 @@ export default {
         search: this.search,
       };
       request.get(
-              "/goods",
+          "/job",
           {params}
-          )
+      )
           .then(res => {
             console.log(res);
             this.list = this.list.concat(res.data.records); //
             this.totalPages = res.data.pages;
-            // this.loading = false;
-            // console.log(this.count);
-            // console.log(this.totalPages / 5);
           })
           .catch(err => {
             console.log(err);
@@ -220,24 +200,20 @@ export default {
     add() {
       this.dialogVisible = true;
       this.form = {};
-      // 清空图片上传列表
-      nextTick(()=> {
-        this.$refs.uploadImg.clearFiles()
-      })
-
     },
     //保存到数据库
     save() {
 
+      // let author = user.userName
       // console.log(user.userName+ "----------------------------------");
-      if(this.form.author == null){
+      if (this.form.author == null) {
         this.form.author = user.userName //赋值用户名
         // console.log(this.form.author +"--------------------------------------------------");
       }
-      this.form.goodsType = this.value
-      request.post("/goods", this.form).then(res => {
+      this.form.jobType = this.value
+      request.post("/job", this.form).then(res => {
         console.log(res);
-        if (this.form.goodsId) {
+        if (this.form.jobId) {
           if (res.code === '0') {
             this.$message({
               type: "success",
@@ -255,6 +231,7 @@ export default {
               type: "success",
               message: "新增成功"
             })
+            // this.load();
           } else {
             this.$message({
               type: "error",
@@ -262,56 +239,34 @@ export default {
             })
           }
         }
-        this.load();
+
         this.dialogVisible = false;
       })
     },
-    // 上传图片
-    fileUploadSuccess(res) {
-      this.form.goodsImg = res.data
-    },
 
-    // toDetail(goodsId){
-    //
-    //   request.get("/goods/getVO",goodsId).then(res=> {
-    //     // 把专业信息赋值给select
-    //     // console.log(this.goodsVO = res.data.records);
-    //     // this.goodsVO = res.data.records
-    //     // $router.push({path:'/detail',query:{goodsVO:res.data.records}})
-    //   })
-    //
-    //
-    //   request.get("/goods/getVO", goodsId).then(res => {
-    //
-    //   })
-    //
-    //
-    //
-    // }
   },
+
   setup() {
-    // const url = ref(
-    //     'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-    // )
     return {
-      search: ref(''),
-      // url,
       options: ref([
         {
-          value: '书籍',
-          label: '书籍',
+          value: '跑腿',
+          label: '跑腿',
         },
         {
-          value: '日用品',
-          label: '日用品',
+          value: '食堂兼职',
+          label: '食堂兼职',
         },
         {
-          value: '电子设备',
-          label: '电子设备',
+          value: '代取快递',
+          label: '代取快递',
         },
-
+        {
+          value: '其他',
+          label: '其他',
+        }
       ]),
-      value: ref('')
+      value: ref(''),
     }
   },
 };
@@ -319,10 +274,6 @@ export default {
 
 <style scoped>
 body{
-  /*background-color: #edf2f6;*/
-  /*background-image: url("../assets/login11.jpg");*/
+  background-color: #edf2f6;
 }
-/*.bkimg{*/
-/*  background-image: url("../assets/login11.jpg");*/
-/*}*/
 </style>

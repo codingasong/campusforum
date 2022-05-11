@@ -279,17 +279,10 @@ export default {
           label: '代取快递',
         },
         {
-          value: '代做',
-          label: '代做',
+          value: '其他',
+          label: '其他',
         },
-        {
-          value: '刷课',
-          label: '刷课',
-        },
-        {
-          value: '代寝',
-          label: '代寝',
-        },
+
       ]),
       value: ref(''),
     }

@@ -30,7 +30,7 @@
       <el-table-column prop="gender" label="性别"></el-table-column>
       <el-table-column prop="age" label="年龄"></el-table-column>
       <el-table-column prop="major" label="专业"></el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
+      <el-table-column prop="email" label="联系方式"></el-table-column>
       <el-table-column label="用户类型">
         <template #default="scope">
           <span v-if="scope.row.role === 1">管理员</span>
@@ -101,8 +101,19 @@
                       </el-option>
                     </el-select>
         </el-form-item>
-        <el-form-item label="邮箱">
+        <el-form-item label="联系方式">
           <el-input v-model="form.email" style="width: 70%"></el-input>
+        </el-form-item>
+        <el-form-item label="用户类型" v-if="this.userRole === 1">
+          <el-select v-model="valueRole" placeholder="请选择用户类型">
+            <el-option
+                v-for="item in optionsRole"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -123,7 +134,8 @@
 
 import {ref, defineComponent } from "vue";
 import request from "@/utils/request";
-
+let userStr = sessionStorage.getItem("user") || "{}"
+let user = JSON.parse(userStr)
 export default {
   name: 'User',
   setup() {
@@ -141,8 +153,15 @@ export default {
   },
   methods: {
     handleEdit(row) {
+      if(row.role === 1){
+        this.valueRole = "管理员"
+      }else{
+        this.valueRole = "普通用户"
+      }
       // 对数据深拷贝
       this.form = JSON.parse(JSON.stringify(row))
+
+      // this.valueRole = row.role
       this.dialogVisible = true
 
       // 修改完信息，重新存储到session
@@ -200,7 +219,10 @@ export default {
 
     //保存到数据库
     save() {
+      // form的专业和用户类型值
       this.form.major = this.value
+      this.form.role = this.valueRole
+
       request.post("/user", this.form).then(res => {
         console.log(res);
         if (this.form.userId) {
@@ -245,6 +267,7 @@ export default {
         //console.log(res);
         this.tableData = res.data.records
         this.total = res.data.total
+        this.userRole = user.role
       })
 
     }
@@ -262,6 +285,21 @@ export default {
       total: 0,
       // 表格数据项
       tableData: [],
+      userRole: 2,
+
+      optionsRole: ref([
+        {
+          value: '1',
+          label: '管理员',
+        },
+        {
+          value: '2',
+          label: '普通用户',
+        },
+
+
+      ]),
+      valueRole: ref(''),
       //搜索
       //search : '',
       // 新增下拉列表数据项

@@ -9,6 +9,7 @@ import com.dcampusforum.springboot.common.Result;
 import com.dcampusforum.springboot.entity.Goods;
 import com.dcampusforum.springboot.entity.User;
 import com.dcampusforum.springboot.service.GoodsService;
+import com.dcampusforum.springboot.vo.GoodsVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -38,7 +39,9 @@ public class GoodsController {
         if(StrUtil.isNotBlank(search)){
             jobLambdaQueryWrapper.like(Goods::getGoodsName,search);
         }
-        IPage<Goods> page = goodsService.page(new Page<>(pageNum,pageSize),jobLambdaQueryWrapper);
+//        排序
+        LambdaQueryWrapper<Goods> goodsLambdaQueryWrapper = jobLambdaQueryWrapper.orderByDesc(Goods::getGoodsPubdate);
+        IPage<Goods> page = goodsService.page(new Page<>(pageNum,pageSize),goodsLambdaQueryWrapper);
         return Result.success(page);
 
 //        Page<User> userPage = goodsService.findPage(new Page<>(pageNum, pageSize), search);
@@ -67,5 +70,11 @@ public class GoodsController {
     public Result<?> delMajorById(@PathVariable Long goodsId){
         goodsService.removeById(goodsId);
         return Result.success();
+    }
+
+    @GetMapping("/getVO/{goodsId}")
+    public Result<?> getGoodsVO(@PathVariable int goodsId){
+        GoodsVO goodsVO = goodsService.getGoodsVO(goodsId);
+        return Result.success(goodsVO);
     }
 }

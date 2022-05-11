@@ -1,7 +1,7 @@
 <template>
 
   <div >
-    <el-button @click="add" type="primary" size="large" >发布</el-button>
+    <el-button @click="add" type="primary" size="large" >发布一条</el-button>
     <el-row>
       <el-col>
         <div v-infinite-scroll="load"  class="infinite-list" style="overflow:auto; scrollbar-width:none;">
@@ -57,7 +57,7 @@
                       </template>
                       <!--                      <el-button type="primary" size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-button>-->
                       <!--                      <el-tag size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-tag>-->
-                      <el-button type="text" size="small" @click="$router.push({path:'/detail',query:{goodsId:i.goodsId}})">查看详情</el-button>
+                      <el-button type="text" size="small" @click="$router.push({path:'/postDetail',query:{postsId:i.postsId}})">查看详情</el-button>
                     </el-descriptions-item>
 
                   </el-descriptions>
@@ -91,10 +91,10 @@
       </template>
     </el-dialog>
 
+    <el-backtop :right="100" :bottom="100" />
   </div>
 
 
-  <el-backtop :right="100" :bottom="100" />
 
 
 </template>
@@ -239,7 +239,10 @@ export default {
           value: '电子设备',
           label: '电子设备',
         },
-
+        {
+          value: '其他',
+          label: '其他',
+        },
       ]),
       value: ref('')
     }

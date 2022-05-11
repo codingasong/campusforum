@@ -150,6 +150,10 @@ export default {
           value: '电子设备',
           label: '电子设备',
         },
+        {
+          value: '其他',
+          label: '其他',
+        },
 
       ]),
       value: ref('')
