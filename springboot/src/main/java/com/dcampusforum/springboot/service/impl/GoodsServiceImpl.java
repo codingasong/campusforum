@@ -17,15 +17,15 @@ import javax.annotation.Resource;
 public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements GoodsService {
     @Resource
     GoodsMapper goodsMapper;
-    @Override
-    public Page<Goods> findPage(Page<Object> objectPage, String search) {
-        LambdaQueryWrapper<Goods> wrapper = Wrappers.<Goods>lambdaQuery();
-        if (StrUtil.isNotBlank(search)) {
-            wrapper.like(Goods::getGoodsName, search);
-        }
-        Page<Goods> goodsPage = goodsMapper.findPage(objectPage, search);
-        return goodsPage;
-    }
+//    @Override
+//    public Page<Goods> findPage(Page<Object> objectPage, String search) {
+//        LambdaQueryWrapper<Goods> wrapper = Wrappers.<Goods>lambdaQuery();
+//        if (StrUtil.isNotBlank(search)) {
+//            wrapper.like(Goods::getGoodsName, search);
+//        }
+//        Page<Goods> goodsPage = goodsMapper.findPage(objectPage, search);
+//        return goodsPage;
+//    }
 
     @Override
     public GoodsVO getGoodsVO(Integer goodsId) {

@@ -306,10 +306,21 @@ export default {
           label: '日用品',
         },
         {
+          value: '食品',
+          label: '食品',
+        },
+        {
+          value: '护肤品',
+          label: '护肤品',
+        },
+        {
           value: '电子设备',
           label: '电子设备',
         },
-
+        {
+          value: '其他',
+          label: '其他',
+        },
       ]),
       value: ref('')
     }

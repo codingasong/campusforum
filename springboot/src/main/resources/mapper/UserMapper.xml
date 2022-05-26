@@ -3,30 +3,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dcampusforum.springboot.mapper.UserMapper">
 
-    <resultMap id="userMap" type="com.dcampusforum.springboot.entity.User">
-        <result property="userId" column="user_id"/>
-        <result property="userName" column="user_name"/>
-        <result property="password" column="password"/>
-        <result property="gender" column="gender"/>
-        <result property="email" column="email"/>
-        <result property="major" column="major"/>
-        <result property="age" column="age"/>
-        <result property="role" column="role"/>
-        <collection property="goodsList" javaType="ArrayList" ofType="com.dcampusforum.springboot.entity.Goods">
-            <result column="goods_Id" property="goodsId"/>
-            <result column="goods_name" property="goodsName"/>
-            <result column="goods_type" property="goodsType"/>
-            <result column="goods_price" property="goodsPrice"/>
-            <result column="goods_detail" property="goodsDetail"/>
-            <result column="goods_img" property="goodsImg"/>
-            <result column="goods_pubdate" property="goodsPubdate"/>
-            <result column="author" property="author"/>
-        </collection>
-    </resultMap>
+<!--    <resultMap id="userMap" type="com.dcampusforum.springboot.entity.User">-->
+<!--        <result property="userId" column="user_id"/>-->
+<!--        <result property="userName" column="user_name"/>-->
+<!--        <result property="password" column="password"/>-->
+<!--        <result property="gender" column="gender"/>-->
+<!--        <result property="email" column="email"/>-->
+<!--        <result property="major" column="major"/>--><!--        <result property="age" column="age"/>-->
+<!--        <result property="role" column="role"/>-->
+<!--        <collection property="goodsList" javaType="ArrayList" ofType="com.dcampusforum.springboot.entity.Goods">-->
+<!--            <result column="goods_Id" property="goodsId"/>-->
+<!--            <result column="goods_name" property="goodsName"/>-->
+<!--            <result column="goods_type" property="goodsType"/>-->
+<!--            <result column="goods_price" property="goodsPrice"/>-->
+<!--            <result column="goods_detail" property="goodsDetail"/>-->
+<!--            <result column="goods_img" property="goodsImg"/>-->
+<!--            <result column="goods_pubdate" property="goodsPubdate"/>-->
+<!--            <result column="author" property="author"/>-->
+<!--        </collection>-->
+<!--    </resultMap>-->
 
-    <select id="findPage" resultMap="userMap">
-        select g.* from goods g, user u where g.author = u.user_name AND u.user_name like concat('%', #{userName}, '%') ORDER BY g.goods_id ASC
-    </select>
+<!--    <select id="findPage" resultMap="userMap">-->
+<!--        select g.* from goods g, user u where g.author = u.user_name AND u.user_name like concat('%', #{userName}, '%') ORDER BY g.goods_id ASC-->
+<!--    </select>-->
 
     <!--  <select id="findGoodsPage" resultMap="userMap">-->
     <!--SELECT g.* FROM goods AS g,user AS u WHERE g.author = u.user_name AND u.user_name like concat('%', #{nickName}, '%') ORDER BY g.goods_id ASC-->

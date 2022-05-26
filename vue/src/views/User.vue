@@ -31,7 +31,7 @@
       <el-table-column prop="age" label="年龄"></el-table-column>
       <el-table-column prop="major" label="专业"></el-table-column>
       <el-table-column prop="email" label="联系方式"></el-table-column>
-      <el-table-column label="用户类型">
+      <el-table-column prop="role" label="用户类型">
         <template #default="scope">
           <span v-if="scope.row.role === 1">管理员</span>
           <span v-if="scope.row.role === 2">普通用户</span>
@@ -142,7 +142,20 @@ export default {
     return {
       search: ref(''),
       options: ref(''),
-      value: ref('')
+      value: ref(''),
+      optionsRole: ref([
+        {
+          value: '1',
+          label: '管理员',
+        },
+        {
+          value: '2',
+          label: '普通用户',
+        },
+
+
+      ]),
+      valueRole: ref(''),
     }
   },
   components: {},
@@ -287,19 +300,7 @@ export default {
       tableData: [],
       userRole: 2,
 
-      optionsRole: ref([
-        {
-          value: '1',
-          label: '管理员',
-        },
-        {
-          value: '2',
-          label: '普通用户',
-        },
 
-
-      ]),
-      valueRole: ref(''),
       //搜索
       //search : '',
       // 新增下拉列表数据项

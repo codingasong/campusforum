@@ -14,12 +14,15 @@
 <!--        <li></li>-->
 <!--      </ul>-->
       <div id="img" style="margin: 0 auto; text-align: center;">
-      <el-image
-          :src="this.goodsVO.goodsImg"
-          :preview-src-list="this.goodsVO.goodsImgs"
-          style="margin:0 auto;text-align: center;width: 300px;"
-      >
-      </el-image>
+        <el-card>
+          <el-image
+              :src="this.goodsVO.goodsImg"
+              :preview-src-list="this.goodsVO.goodsImgs"
+              style="margin:0 auto;text-align: center;width: 600px;"
+          >
+          </el-image>
+        </el-card>
+
       </div>
 
 

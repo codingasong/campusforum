@@ -7,6 +7,6 @@ import com.dcampusforum.springboot.entity.User;
 import com.dcampusforum.springboot.vo.GoodsVO;
 
 public interface GoodsService extends IService<Goods> {
-    Page<Goods> findPage(Page<Object> objectPage, String search);
+//    Page<Goods> findPage(Page<Object> objectPage, String search);
     GoodsVO getGoodsVO(Integer goodsId);
 }

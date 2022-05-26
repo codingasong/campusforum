@@ -60,8 +60,8 @@
 <script>
 import request from "@/utils/request";
 import {ref} from "vue";
-const value = ref('')
-const options = ref('')
+// const value = ref('')
+// const options = ref('')
 export default {
   name: "Person",
   data() {
@@ -69,13 +69,13 @@ export default {
       form: {}
     }
   },
-  // setup() {
-  //   return {
-  //
-  //     options: ref(''),
-  //     value: ref('')
-  //   }
-  // },
+  setup() {
+    return {
+
+      options: ref(''),
+      value: ref('')
+    }
+  },
   created() {
     let str = sessionStorage.getItem("user") || "{}"
     this.form = JSON.parse(str)

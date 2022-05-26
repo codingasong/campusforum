@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dcampusforum.springboot.common.Result;
+import com.dcampusforum.springboot.entity.Goods;
 import com.dcampusforum.springboot.entity.Job;
 import com.dcampusforum.springboot.entity.Posts;
 import com.dcampusforum.springboot.entity.User;
@@ -65,7 +66,9 @@ public class PostsController {
             postsLambdaQueryWrapper.like(Posts::getPostsTitle,search);
 
         }
-        IPage<Posts> page = postsService.page(new Page<>(pageNum,pageSize),postsLambdaQueryWrapper);
+        //        排序
+        LambdaQueryWrapper<Posts> postsLambdaQueryWrapper1 = postsLambdaQueryWrapper.orderByDesc(Posts::getPostsPubdate);
+        IPage<Posts> page = postsService.page(new Page<>(pageNum,pageSize),postsLambdaQueryWrapper1);
         return Result.success(page);
     }
 

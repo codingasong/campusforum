@@ -3,29 +3,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dcampusforum.springboot.mapper.GoodsMapper">
 
-    <resultMap id="goodsMap" type="com.dcampusforum.springboot.entity.Goods">
-        <result property="goodsId" column="goods_id"/>
-        <result property="goodsName" column="goods_name"/>
-        <result property="goodsType" column="goods_type"/>
-        <result property="goodsPrice" column="goods_price"/>
-        <result property="goodsDetail" column="goods_detail"/>
-        <result property="goodsImg" column="goods_img"/>
-        <result property="goodsPubdate" column="goods_pubdate"/>
-        <result property="author" column="author"/>
+<!--    <resultMap id="goodsMap" type="com.dcampusforum.springboot.entity.Goods">-->
+<!--        <result property="goodsId" column="goods_id"/>-->
+<!--        <result property="goodsName" column="goods_name"/>-->
+<!--        <result property="goodsType" column="goods_type"/>-->
+<!--        <result property="goodsPrice" column="goods_price"/>-->
+<!--        <result property="goodsDetail" column="goods_detail"/>-->
+<!--        <result property="goodsImg" column="goods_img"/>-->
+<!--        <result property="goodsPubdate" column="goods_pubdate"/>-->
+<!--        <result property="author" column="author"/>-->
 
-    </resultMap>
+<!--    </resultMap>-->
 
-    <select id="findPage" resultMap="goodsMap">
+<!--    <select id="findPage" resultMap="goodsMap">-->
 
-        SELECT
-            goods.*
-        FROM
-            goods
-        WHERE
-            goods.author = #{userName}
-        ORDER BY
-            goods.goods_id ASC
-    </select>
+<!--        SELECT-->
+<!--            goods.*-->
+<!--        FROM-->
+<!--            goods-->
+<!--        WHERE-->
+<!--            goods.author = #{userName}-->
+<!--        ORDER BY-->
+<!--            goods.goods_id ASC-->
+<!--    </select>-->
 
     <!--  <select id="findGoodsPage" resultMap="userMap">-->
     <!--SELECT g.* FROM goods AS g,user AS u WHERE g.author = u.user_name AND u.user_name like concat('%', #{nickName}, '%') ORDER BY g.goods_id ASC-->

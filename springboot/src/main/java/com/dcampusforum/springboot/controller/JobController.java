@@ -43,7 +43,9 @@ public class JobController {
         if(StrUtil.isNotBlank(search)){
             jobLambdaQueryWrapper.like(Job::getJobName,search);
         }
-        IPage<Job> page = jobService.page(new Page<>(pageNum,pageSize),jobLambdaQueryWrapper);
+        //        排序
+        LambdaQueryWrapper<Job> jobLambdaQueryWrapper1 = jobLambdaQueryWrapper.orderByDesc(Job::getJobPubdate);
+        IPage<Job> page = jobService.page(new Page<>(pageNum,pageSize),jobLambdaQueryWrapper1);
         return Result.success(page);
     }
 

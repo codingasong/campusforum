@@ -16,8 +16,17 @@
       <span style="font-size: 20px; color:white">沈阳城市建设学院校园论坛</span>
     </el-menu-item>
     <el-menu-item index="/a/goods">
-      <el-space wrap><el-avatar :size="40" :src="user.avatar" alt="user.name" style="position: relative; "></el-avatar></el-space>
-      {{ user.userName }}
+      <el-dropdown style="min-width: 80px">
+        <span class="el-dropdown-link" style="color: #ffffff;">
+          <el-avatar :size="40" :src="user.avatar" alt="user.name" style="position: relative; "></el-avatar>
+          {{ user.userName }}
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item @click="$router.push('/login')">退出系统</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </el-menu-item>
     <el-menu-item index="/index">
       <i class="el-icon-s-goods" style="color:#fff;"></i>
